@@ -1,4 +1,4 @@
-# Datasets and 
+# Datasets 
 
 The model sigma-delta modulator (SDM) is single-stage one-bit architecture or so called cascaded. 
 
