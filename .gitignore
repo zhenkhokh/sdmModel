@@ -1,5 +1,6 @@
-/out
-/home/.cache
-/home/.confgig
-/home/.ipython
-/home/.local
+out/*
+home/.cache
+home/.confgig
+home/.ipython
+home/.local
+.idea/*
