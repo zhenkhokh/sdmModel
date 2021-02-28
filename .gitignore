@@ -3,4 +3,5 @@ home/.cache
 home/.confgig
 home/.ipython
 home/.local
+home/.jupyter
 .idea/*
