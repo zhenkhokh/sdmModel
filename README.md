@@ -36,3 +36,7 @@ To start navigating on project tree and Jupiter Notebook
 
 can be copied to browser address line.
 
+# Example
+![](checkModels-0.png)
+![](checkModels-1.png)
+
