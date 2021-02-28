@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
     private final static String OUT_PATH="";
-    private final static String OUT_NAME = "outOrder5.cvs";
+    private final static String OUT_NAME = "outOrder5.csv";
     private final static String IN_NAME = "order5.csv";
     private final static String IN_CONFIG = "inputs_.csv";
 
@@ -31,18 +31,18 @@ public class Main {
     private static void writeResult(Double[] inputs, Integer[] outputs) throws IOException {
         File file = new File(OUT_PATH+OUT_NAME);
         file.createNewFile();
-            FileOutputStream fos = new FileOutputStream(file,false);
-            byte[] endOfline = System.getProperty("line.separator").getBytes();
-            fos.write("input,output".getBytes());
+        FileOutputStream fos = new FileOutputStream(file,false);
+        byte[] endOfline = System.getProperty("line.separator").getBytes();
+        fos.write("input,output".getBytes());
+        fos.write(endOfline);
+        int i=0;
+        for (Double input:inputs){
+            StringBuilder sb = new StringBuilder();
+            sb.append(input).append(",").append(outputs[i++]);
+            fos.write(sb.toString().getBytes());
             fos.write(endOfline);
-            int i=0;
-            for (Double input:inputs){
-                StringBuilder sb = new StringBuilder();
-                sb.append(input).append(",").append(outputs[i++]);
-                fos.write(sb.toString().getBytes());
-                fos.write(endOfline);
-            }
-            fos.close();
+        }
+        fos.close();
     }
 
     private static Integer[] makeOutputs(Double[] inputs, ArrayList<? extends List> params) {
@@ -54,14 +54,13 @@ public class Main {
         for (int i=0; i<outputs.length; i++) {
             _integrators[0] = inputs[i];
             int j=0;
-            for (List<Double> order: params) {
-                integrators[j+1] = order.get(0) * _integrators[j] - order.get(1)*comparator + order.get(2)*integrators[j+1];
+            for (List<Double> stage: params) {
+                integrators[j+1] = stage.get(0) * _integrators[j] - stage.get(1)*comparator + stage.get(2)*integrators[j+1];
                 j++;
             }
             _integrators = Arrays.copyOf( integrators, integrators.length);
             comparator = sign(integrators[integrators.length - 1]);
             outputs[i] = comparator;
-//                System.out.format("%10.16f %d%n",_integrators[_integrators.length - 1], comparator);
         }
         return outputs;
     }
@@ -84,7 +83,6 @@ public class Main {
             inputs[i] = 0.0;
             for (List<Double> input : dictInputs)
                 inputs[i] += input.get(0)*Math.sin(input.get(1)*i + input.get(2));
-//            System.out.format("%10.16f%n",inputs[i]);
         }
         return inputs;
     }
@@ -110,5 +108,3 @@ public class Main {
         return _inputs;
     }
 }
-
-
