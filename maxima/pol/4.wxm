@@ -1,0 +1,97 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3 ] */
+
+/* [wxMaxima: input   start ] */
+eq1:I1=(g11*in-g12*v1)*z^-1/(1-z^-1);
+eq2:I2=(g21*I1-g22*v1)*z^-1/(1-z^-1);
+eq3:I3=(g31*I2-g32*v1)*z^-1/(1-z^-1);
+eq4:I4=(g41*I3-g42*v1)*z^-1/(1-z^-1);
+eq5:v1=E+I4;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sol:solve([eq1,eq2,eq3,eq4,eq5],[v1,I1,I2,I3,I4]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+NTF:ratsimp(rhs(ev(sol[1][1]/E,in=0)));
+STF:ratsimp(rhs(ev(sol[1][1]/in,E=0)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+N(z):=''NTF;
+S(z):=''STF;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B:denom(N(z));
+B(z):=''B;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+n:4;
+b1:diff(B(z)-(z-1)^n,z,n-1)/factorial(n-1);
+b1:ratsimp(ev(b1,z=0));
+b2:diff(B(z)-(z-1)^n,z,n-2)/factorial(n-2);
+b2:ratsimp(ev(b2,z=0));
+b3:diff(B(z)-(z-1)^n,z,n-3)/factorial(n-3);
+b3:ratsimp(ev(b3,z=0));
+b4:diff(B(z)-(z-1)^n,z,n-4)/factorial(n-4);
+b4:ratsimp(ev(b4,z=0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+par:[g11=1/4,g12=1/4,g21=1/8,g22=1/8,g31=1/2,g32=1/2,g41=1,g42=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pardA:[g11=1,g12=1,g21=1,g22=4,g31=1,g32=32,g41=1,g42=64];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pardA1:[g11=1,g12=1,g21=1,g22=5,g31=1,g32=33,g41=1,g42=65];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+/*Imin=.385 Imax=3.14*/
+nlEq:ev([(I-1)*(z-1)^n+B(z)],[par,I=3.14]);
+nlEq(z):=''nlEq;
+fr:solve(nlEq(z),z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(abs(ratsimp(fr)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+fr[1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([nlEq], [z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(b1,par);ev(b2,par);ev(b3,par);ev(b4,par);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sI:solve(((8*(b1/2 - b3/2))/b4 - (4*(b1/2 - b3/2)^2)/b4^2 - 4)*I + b4 - b2 - (4*(b1/2 - b3/2)^2)/b4 - 
+(2*b3*(b1/2 - b3/2))/b4,I);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Imin:float(ev((b1-b2+b3-b4)/16,[pardA]));
+Imax:float(rhs(ev(sI[1],[pardA])));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Imin:float(ev((b1-b2+b3-b4)/16,[pardA1]));
+Imax:float(rhs(ev(sI[1],[pardA1])));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
+

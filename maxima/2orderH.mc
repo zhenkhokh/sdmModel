@@ -1,0 +1,13 @@
+detout:true;
+zP = z*matrix([1,0],[0,1]);
+A:matrix([1,0],[g21,1]);
+P_ : z*matrix([1,0],[0,1])-A;
+P:invert(P_);
+e:P.[g12,g22];
+p:ratsimp(e[2]*(z-1)^2);
+b:[coeff(p,z,0),coeff(p,z,1)];
+m0:g22-a2*(2*g22-a1*g12*g21)/4;
+m1:a1/g21*(2*g22+a1*g12*g21)/4;
+m2:(2*g22-a1*g12*g21)/4;
+iMax:ratsimp((2*g22  - a1*g12*g21)/4/g11+(m1+m2-m0)/g11);
+im(g11,g12,g21,a1,a2,g22):=(2 *a2* g21 + 2* a1) *g22 + ((- a1* a2) - 2* a1) *g12* g21^2  + a1^2*  g12* g21;

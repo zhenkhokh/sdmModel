@@ -1,0 +1,150 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3 ] */
+
+/* [wxMaxima: input   start ] */
+eq1:I1=(g11*in-g12*v1)*z^-1/(1-z^-1);
+eq2:I2=(g21*I1-g22*v1)*z^-1/(1-z^-1);
+eq3:I3=(g31*I2-g32*v1)*z^-1/(1-z^-1);
+eq4:I4=(g41*I3-g42*v1)*z^-1/(1-z^-1);
+eq5:I5=(g51*I4-g52*v1)*z^-1/(1-z^-1);
+eq6:v1=E+I5;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sol:solve([eq1,eq2,eq3,eq4,eq5,eq6],[v1,I1,I2,I3,I4,I5]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+NTF:ratsimp(rhs(ev(sol[1][1]/E,in=0)));
+STF:ratsimp(rhs(ev(sol[1][1]/in,E=0)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+N(z):=''NTF;
+S(z):=''STF;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B:denom(N(z));
+B(z):=''B;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+n:5;
+b1:diff(B(z)-(z-1)^n,z,n-1)/factorial(n-1);
+b1:ratsimp(ev(b1,z=0));
+b2:diff(B(z)-(z-1)^n,z,n-2)/factorial(n-2);
+b2:ratsimp(ev(b2,z=0));
+b3:diff(B(z)-(z-1)^n,z,n-3)/factorial(n-3);
+b3:ratsimp(ev(b3,z=0));
+b4:diff(B(z)-(z-1)^n,z,n-4)/factorial(n-4);
+b4:ratsimp(ev(b4,z=0));
+b5:diff(B(z)-(z-1)^n,z,n-5)/factorial(n-5);
+b5:ratsimp(ev(b5,z=0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d1:b1-I*binomial(5,1);
+d2:b2+I*binomial(5,2);
+d3:b3-I*binomial(5,3);
+d4:b4+I*binomial(5,4);
+d5:b5-I*binomial(5,5);
+T2(x):=d2+(2*d3-4*d5)*x+4*d4*x^2+8*d5*x^3;
+T1(x):=d1-d3+d5-2*d4*x-4*d5*x^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+S2(x):=ratsimp(diff(2*x*T2(x)+T1(x),x,2));
+eq:S2(x)=0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(eq,x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+parA:[g11=1/11,g12=1/11,g21=1/6,g22=1/6,g31=1/5,g32=1/5,g41=1/2,g42=1/2,g51=1,g52=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+parB:[g11=1/16,g12=1/16,g21=1/32,g22=1/32,g31=1/8,g32=1/8,g41=1/4,g42=1/4,g51=1,g52=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+parC:[g11=1,g12=11,g21=1/32,g22=1/32,g31=1/8,g32=1/8,g41=1/4,g42=1/4,g51=1,g52=1];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pardC:[g11=1,g12=1,g21=1,g22=11,g31=1,g32=60,g41=1,g42=360,g51=1,g52=660];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pardC1:[g11=1,g12=1,g21=1,g22=11,g31=1,g32=75,g41=1,g42=359,g51=1,g52=660];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+nlEq:ev([(I-1)*(z-1)^n+B(z)],[parA,I=1]);
+nlEq(z):=''nlEq;
+fr:solve(nlEq(z),z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(abs(ratsimp(fr)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([nlEq], [z]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(nlEq,z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+float(ev(b1+b2+b3+b4+b5,parB));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ev(b1,parA);
+ev(b2,parA);
+ev(b3,parA);
+ev(b4,parA);
+ev(b5,parA);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sI:solve(((b1^2 + 2*b1*b2 + 2*b1*b3 + 2*b1*b4 + 2*b1*b5 + b2^2 + 2*b2*b3 + 2*b2*b4 + 2*b2*b5 + b3^2 + 2*b3*b4 + 
+2*b3*b5 + b4^2 + 2*b4*b5 + b5^2)*A^3 + (b1^3 - b1^2*b3 + b1^2*b4 + 2*b1^2*b5 + b1*b2*b4 - 4*b1*b2*b5 - b1*b3*b4 
+- 8*b1*b3*b5 - b1*b4^2 - 4*b1*b4*b5 + 5*b1*b5^2 - 3*b2^2*b5 - 4*b2*b3*b5 + b2*b4^2 + 5*b2*b4*b5 + 12*b2*b5^2 - 
+b3^2*b5 + b3*b4*b5 + 5*b3*b5^2 - b4^3 - 6*b4^2*b5 - 13*b4*b5^2 - 12*b5^3)*A^2 + (- 2*b1^3*b5 - b1^2*b4*b5 - 
+2*b1^2*b5^2 + 2*b3*b1^2*b5 - 2*b1*b2*b4*b5 + 2*b1*b2*b5^2 + 2*b1*b4^2*b5 + 2*b1*b4*b5^2 + b3*b1*b4*b5 - 
+6*b1*b5^3 + 4*b3*b1*b5^2 + 3*b2^2*b5^2 - b2*b4^2*b5 - 8*b2*b4*b5^2 - 14*b2*b5^3 + 2*b3*b2*b5^2 + b4^3*b5 + 
+5*b4^2*b5^2 + 11*b4*b5^3 - 3*b3*b4*b5^2 + 10*b5^4 - 6*b3*b5^3)*A + b1^3*b5^2 - b1^2*b5^3 - b3*b1^2*b5^2 + 
+b1*b2*b4*b5^2 - b1*b4^2*b5^2 - b1*b5^4 + 2*b3*b1*b5^3 - b2^2*b5^3 + b2*b4*b5^3 + b5^5 - b3*b5^4)/((b1^2 + 
+2*b1*b4 + 6*b1*b5 + b4^2 + 6*b4*b5 + 9*b5^2)*A^2 + (- 2*b1^2*b5 - 4*b1*b5^2 - 2*b4*b1*b5 + 6*b5^3 + 2*b4*b5^2)*A 
++ b1^2*b5^2 - 2*b1*b5^3 + b5^4),A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Imin:float(ev((b1-b2+b3-b4+b5)/32,[pardC1]));
+Imax:float(rhs(ev(sI[1],[pardC1])));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Imin:float(ev((b1-b2+b3-b4+b5)/32,[pardC]));
+Imax:float(rhs(ev(sI[1],[pardC])));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expr:[g11=1,g12=16,g21=1,g22=8,g31=1,g32=16,g41=1,g42=16,g51=1,g52=4];
+Imin:float(ev((b1-b2+b3-b4+b5)/32,expr));
+Imax:float(rhs(ev(sI[2],expr)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(b1-b2+b3-b4+b5);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
+

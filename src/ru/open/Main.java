@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class Main {
     private final static String OUT_PATH="";
-    private final static String OUT_NAME = "outOrder5.csv";
-    private final static String IN_NAME = "order5.csv";
+    private final static String OUT_NAME = "outOrder4.csv";
+    private final static String IN_NAME = "order4.csv";
     private final static String IN_CONFIG = "inputs_.csv";
 
     public static void main(String[] args) {

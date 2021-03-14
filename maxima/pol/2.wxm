@@ -1,0 +1,44 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.3 ] */
+
+/* [wxMaxima: input   start ] */
+eq1:I1=(g11*in-g12*v1)*z^-1/(1-z^-1);
+eq2:I2=(g21*I1-g22*v1)*z^-1/(1-z^-1);
+eq3:v1=E+I2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sol:solve([eq1,eq2,eq3],[v1,I1,I2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+NTF:ratsimp(rhs(ev(sol[1][1]/E,in=0)));
+STF:ratsimp(rhs(ev(sol[1][1]/in,E=0)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+N(z):=''NTF;
+S(z):=''STF;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B:denom(N(z));
+B(z):=''B;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+n:2;
+b1:diff(B(z)-(z-1)^n,z,n-1)/factorial(n-1);
+b1:ratsimp(ev(b1,z=0));
+b2:diff(B(z)-(z-1)^n,z,n-2)/factorial(n-2);
+b2:ratsimp(ev(b2,z=0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Imin:1/4*(b1-b2);
+s:b1>-b2;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
+
